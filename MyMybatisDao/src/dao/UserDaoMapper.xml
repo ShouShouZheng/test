@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper开发dao方式，使用namespace 关联到对应的接口 -->
+<mapper namespace="dao.UserDao">
+<!-- 在mapper.xml文件中配置很多的sql语句，执行每个sql语句时，封装为MappedStatement对象
+mapper.xml以statement为单位管理sql语句
+ -->
+ <!-- id在同一个mapper文件中不能重复 在dao模式中 id名称对应的就是方法的名称 -->
+ <!--parameterType 表示传入的参数的类型   如果是引用数据类型,要写完整路径  如果是基本数据类型 只需要写类型名称即可-->
+ <!-- resultType   通常只在查询的时候出现   表示查询返回的数据类型   即使返回是集合类型,也只需要写出其集合中放入的类型既可 -->
+<select id="checkLogin" resultType="entity.User" >
+select * from t_user where user_pwd=#{1}  and  user_name=#{0}
+</select>
+
+<insert id="addUser" parameterType="entity.User">
+insert into t_user(user_name,user_pwd) values(#{user_name},#{user_pwd})
+</insert>
+
+<!-- 如果入参是数值类型或者字符串类型的参数,有且只有一个参数,那么参数名称可以随意 -->
+<delete id="deleteUserById" parameterType="java.lang.Integer">
+delete from t_user where user_id=#{abc}
+</delete>
+
+
+<select id="queryByPage" resultType="entity.User">
+select * from t_user limit #{0},#{1}
+</select>
+
+
+<select id="queryByKey" resultType="entity.User" parameterType="java.lang.String">
+select * from t_user where user_name like  #{abc}
+</select>
+
+
+<select id="queryByKey2" resultType="entity.User" parameterType="java.lang.String">
+select * from t_user where user_name like  '%${_parameter}%'
+</select>
+
+<select id="queryByIdForFanwei" resultType="entity.User">
+select * from t_user where user_id &gt; #{0} and user_id &lt; #{1}
+</select>
+
+
+</mapper>
+
