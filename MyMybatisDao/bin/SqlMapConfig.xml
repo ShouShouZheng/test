@@ -1,0 +1,37 @@
+﻿<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 和spring整合后 environments配置将废除-->
+	<environments default="development">
+		<environment id="development">
+		<!-- 
+		transactionManager  事务管理   type:JDBC MANAGED
+		JDBC:采用的数据库自带的事务来管理mybatis中jdbc的事务  
+		MANAGED  没有配置事务,不提交或者回滚,交给其他框架来管理 
+		 -->
+		<!-- 使用jdbc事务管理  自动提交-->
+			<transactionManager type="JDBC" />	
+			<!-- 数据源  type POOLED|UNPOOLED|JNDI -->
+			<!-- 
+			POOLED mybatis自带的数据连接池
+			UNPOOLED 不使用连接池
+			JNDI  采用JNDI方式的数据库连接池
+			 -->
+				
+			<dataSource type="POOLED">  
+             <!--数据源 -->
+		    	<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/mydata" />
+				<property name="username" value="root" />
+				<property name="password" value="root" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 加载mapper.xml -->
+	<mappers>
+		<mapper resource="dao/UserDaoMapper.xml" />
+	</mappers>
+	
+</configuration>
